@@ -23,6 +23,7 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Action</th>
                 <th>ReservationID</th>
                 <th>ResourceID</th>
                 <th>ResourceName</th>
@@ -35,6 +36,7 @@ else
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>@item.Action</td>
                     <td>@item.ReservationID</td>
                     <td>@item.ResourceID</td>
                     <td>@item.ResourceName</td>
