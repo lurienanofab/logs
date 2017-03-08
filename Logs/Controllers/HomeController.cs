@@ -20,13 +20,46 @@ namespace Logs.Controllers
         }
 
         [Route("autoend")]
-        public async Task<ActionResult> AutoEnd()
+        public async Task<ActionResult> AutoEnd(string search = null, int skip = 0, int limit = 10)
         {
             MongoClient mongo = new MongoClient(ConfigurationManager.AppSettings["MongoConnectionString"]);
             var db = mongo.GetDatabase("logs");
             var col = db.GetCollection<BsonDocument>("autoend");
-            var docs = await col.Find(FilterDefinition<BsonDocument>.Empty).ToListAsync();
+
+            FilterDefinition<BsonDocument> filter;
+            SortDefinition<BsonDocument> sort = Builders<BsonDocument>.Sort.Descending("Timestamp");
+
+            if (string.IsNullOrEmpty(search))
+                filter = FilterDefinition<BsonDocument>.Empty;
+            else
+                filter = Builders<BsonDocument>.Filter.Eq("Action", search);
+
+            var query = col.Find(filter).Sort(sort).Skip(skip).Limit(limit);
+
+            var docs = await query.ToListAsync();
             var model = docs.Select(AutoEndModel.Create).ToList();
+            return View(model);
+        }
+
+        [Route("job")]
+        public async Task<ActionResult> Job(string search = null, int skip = 0, int limit = 10)
+        {
+            MongoClient mongo = new MongoClient(ConfigurationManager.AppSettings["MongoConnectionString"]);
+            var db = mongo.GetDatabase("logs");
+            var col = db.GetCollection<BsonDocument>("job");
+
+            FilterDefinition<BsonDocument> filter;
+            SortDefinition<BsonDocument> sort = Builders<BsonDocument>.Sort.Descending("Timestamp");
+
+            if (string.IsNullOrEmpty(search))
+                filter = FilterDefinition<BsonDocument>.Empty;
+            else
+                filter = Builders<BsonDocument>.Filter.Regex("Path", new BsonRegularExpression(search));
+
+            var query = col.Find(filter).Sort(sort).Skip(skip).Limit(limit);
+
+            var docs = await query.ToListAsync();
+            var model = docs.Select(JobModel.Create).ToList();
             return View(model);
         }
     }

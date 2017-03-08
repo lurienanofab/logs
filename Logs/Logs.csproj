@@ -120,6 +120,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AutoEndModel.cs" />
+    <Compile Include="Models\JobModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +131,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AutoEnd.cshtml" />
     <None Include="Properties\PublishProfiles\Production %28Apps%29.pubxml" />
+    <Content Include="Views\Home\Job.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
