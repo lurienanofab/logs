@@ -1,0 +1,48 @@
+﻿@using Logs.Models;
+
+@model IEnumerable<AutoEndModel>
+@{
+    ViewBag.Title = "AutoEnd";
+}
+
+<div class="page-header">
+    <h1>
+        @Html.ActionLink("Logs", "Index") / AutoEnd
+    </h1>
+</div>
+
+
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-warning" role="alert">
+        No items were found.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ReservationID</th>
+                <th>ResourceID</th>
+                <th>ResourceName</th>
+                <th>ClientID</th>
+                <th>DisplayName</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ReservationID</td>
+                    <td>@item.ResourceID</td>
+                    <td>@item.ResourceName</td>
+                    <td>@item.ClientID</td>
+                    <td>@item.DisplayName</td>
+                    <td>@item.Timestamp</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
