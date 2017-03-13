@@ -3,12 +3,20 @@
 @model IEnumerable<AutoEndModel>
 @{
     ViewBag.Title = "AutoEnd";
+    string search = Request.QueryString["search"];
 }
 
 <div class="page-header">
     <h1>
         @Html.ActionLink("Logs", "Index") / AutoEnd
     </h1>
+</div>
+
+<div class="btn-group" role="group" aria-label="Search Options" style="margin-bottom: 20px;">
+    @Html.ActionLink("All", "AutoEnd", null, new { @class = string.IsNullOrEmpty(search) ? "btn btn-primary" : "btn btn-default" })
+    @Html.ActionLink("AutoEnd", "AutoEnd", new { search = "autoend" }, new { @class = search == "autoend" ? "btn btn-primary" : "btn btn-default" })
+    @Html.ActionLink("Repair", "AutoEnd", new { search = "repair" }, new { @class = search == "repair" ? "btn btn-primary" : "btn btn-default" })
+    @Html.ActionLink("Unstarted", "AutoEnd", new { search = "unstarted" }, new { @class = search == "unstarted" ? "btn btn-primary" : "btn btn-default" })
 </div>
 
 @if (Model.Count() == 0)
